@@ -435,9 +435,8 @@ A demonstration of the working prototype will be provided here.
 
 ### ▶️ Beam Balance Demonstration
 
-[**Watch the Project Demonstration Video**]beam balance  demo.mp4
-
-> Upload the final demonstration video to the `video` folder, or replace the link above with your YouTube/Google Drive video link.
+[**Watch the Project Demonstration Video**]
+https://github.com/dlalan7250-lab/Beam-Balance-Control-System-Using-PID/blob/a9eba467e9f33d9fbe783946a6eaa349fc461a61/beam%20balance%20%20demo.mp4
 
 ### What the video should ideally show
 
