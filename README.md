@@ -412,6 +412,7 @@ This can be useful while tuning the controller and studying system response.
 
 
 ## Front View
+<img width="1600" height="901" alt="image" src="https://github.com/user-attachments/assets/8680243b-b412-4560-a87a-b917e02bdc80" />
 
 
 ## Top View
