@@ -619,7 +619,3 @@ This project provided valuable hands-on experience in applying control-system co
 
 ---
 
-<p align="center">
-  <b>⚙️ Built to understand Control Systems through a real physical prototype.</b>
-</p>
-```
