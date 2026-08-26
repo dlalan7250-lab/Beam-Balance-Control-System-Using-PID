@@ -1,163 +1,245 @@
-Beam Balance Using PID Controller
+⚖️ Beam Balance System
 
-Arduino Uno • HC-SR04 • Servo Motor • Closed-Loop Control
+Ball-and-Beam Position Control using Arduino Uno, Ultrasonic Sensor & Servo Motor
 
-A practical Beam Balance (Ball-and-Beam) control system developed as a course laboratory project at IIT Guwahati.
+Course Lab Project
 
-Author: Lalan Kumar Das
-Roll No.: 230108028
-Guide: Dr. Chayan Bhawal
-Institute: Indian Institute of Technology Guwahati
-Department: Electrical and Electronics Engineering
+Developed by: Lalan Kumar Das
+Under the Guidance of: Dr. Chayan Bhawal
 
-📌 Project Overview
+📸 Project Preview
 
-The objective of this project is to demonstrate a real-time closed-loop position control system using a physical beam-and-ball mechanism.
+Add your best and clearest photograph of the complete working prototype here.
+This should be the first image visitors see when they open the repository.
 
-An HC-SR04 ultrasonic sensor measures the position of the ball. The Arduino Uno compares this measured position with the desired reference position and calculates the control action using a PID-control structure. A servo motor then changes the inclination of the beam, causing the ball to roll toward the desired position.
 
-The complete loop is:
 
-Measure → Calculate Error → PID Control → Servo Actuation → Beam Motion → Ball Position → Feedback
+📌 About the Project
 
-This project connects control-system theory with practical embedded hardware and mechanical prototyping.
+The Beam Balance System, also known as a Ball-and-Beam System, is a practical control-system project developed as part of a course laboratory.
+
+The objective of this project is to control the position of a ball placed on a beam by automatically adjusting the angle of the beam using a servo motor.
+
+An HC-SR04 ultrasonic sensor measures the position of the ball. The measured position is sent to an Arduino Uno, which calculates the error between the desired position and the actual position. Based on this error, a control signal is generated for the servo motor.
+
+The servo changes the beam angle, causing the ball to move toward the desired position.
+
+The system therefore demonstrates the fundamental concept of a closed-loop feedback control system.
 
 🎯 Objectives
 
-Build a practical beam-and-ball control prototype.
+The main objectives of this project are:
 
-Measure ball position using an HC-SR04 ultrasonic sensor.
+To understand the working principle of a ball-and-beam control system.
 
-Use Arduino Uno for real-time control computation.
+To measure the position of a ball using an ultrasonic sensor.
 
-Control beam inclination using a servo motor.
+To control the beam angle using a servo motor.
 
-Implement the P, I and D control structure in Arduino.
+To implement a feedback-based control system using Arduino Uno.
 
-Understand the role of feedback, error and controller output.
+To understand the practical implementation of a PID controller.
 
-Study practical issues such as sensor noise, mechanical vibration and actuator limitations.
+To study the effect of controller parameters on system response.
 
-Provide a foundation for experimental PID tuning.
+To gain hands-on experience in integrating sensors, actuators, embedded systems, and control algorithms.
 
-⚙️ System Architecture
+🧠 System Concept
 
-The system is designed as a closed-loop feedback control system.
+The project follows a closed-loop control structure:
 
-flowchart LR
-    R["Reference<br/>Setpoint"] --> E["Error<br/>e = r - y"]
-    E --> PID["PID Controller<br/>P + I + D"]
-    PID --> S["Servo Motor<br/>Actuator"]
-    S --> P["Beam + Ball<br/>Physical Plant"]
-    P --> H["HC-SR04<br/>Position Measurement"]
-    H --> E
+             Desired Position
+                    │
+                    ▼
+              ┌───────────┐
+              │  Compare  │
+              └─────┬─────┘
+                    │
+                  Error
+                    │
+                    ▼
+              ┌───────────┐
+              │ Controller│
+              │ PID Logic │
+              └─────┬─────┘
+                    │
+              Control Signal
+                    │
+                    ▼
+              ┌───────────┐
+              │   Servo   │
+              │   Motor   │
+              └─────┬─────┘
+                    │
+              Beam Angle
+                    │
+                    ▼
+              ┌───────────┐
+              │    Ball   │
+              │ Position  │
+              └─────┬─────┘
+                    │
+                    ▼
+              ┌───────────┐
+              │ HC-SR04   │
+              │  Sensor   │
+              └─────┬─────┘
+                    │
+                    └──────────► Feedback
 
-Control principle
+⚙️ How the System Works
 
-For the documented implementation, the reference position is:
+The complete operation can be understood in five basic steps.
 
-Setpoint = 15 cm
+1. Ball Position Measurement
 
-The Arduino calculates:
+The HC-SR04 ultrasonic sensor measures the distance between the sensor and the ball.
 
-[
-e(t) = r(t) - y(t)
-]
+The sensor sends an ultrasonic pulse and measures the time taken for the reflected pulse to return.
 
-where:
+The Arduino calculates the approximate distance using the echo time.
 
-r(t) = desired ball position
+In the program:
 
-y(t) = measured ball position
+long t = pulseIn(echo, HIGH);
+long cm = t / 29 / 2;
 
-e(t) = position error
+The calculated distance is then used as the feedback signal.
 
-The controller structure is:
+2. Setpoint
 
-[
-u(t) = K_p e(t) + K_i \int e(t),dt + K_d\frac{de(t)}{dt}
-]
+A desired ball position is defined in the program:
 
-The resulting controller output is mapped to a suitable servo command.
+int setP = 15;
 
-🔄 Working Principle
+Therefore, the current program uses 15 cm as the target distance from the ultrasonic sensor.
 
-The user-defined reference position is set to 15 cm.
+Important: This means 15 cm represents the sensor-to-ball distance, not necessarily the physical center of the beam.
 
-The HC-SR04 sends an ultrasonic pulse toward the ball.
+3. Error Calculation
 
-The echo time is measured by the Arduino.
+The controller calculates the difference between the desired position and the measured position.
 
-The echo duration is converted into distance in centimetres.
+Error = Setpoint − Measured Position
 
-The Arduino calculates the position error:
-error = setpoint - measured_position
+In the Arduino code:
 
-The P, I and D terms are calculated.
+double error = setP - dis;
 
-The combined controller output is converted into a servo position.
+If the ball moves away from the desired position, the error changes and the controller responds accordingly.
 
-The servo changes the beam inclination through the mechanical linkage.
+4. Control Action
 
-Gravity causes the ball to roll along the beam.
+The calculated error is processed by the controller.
 
-The sensor measures the new position and the cycle repeats.
+The project contains the basic structure of a PID controller:
 
-The objective is to continuously reduce the position error and keep the ball near the desired location.
+PID Output = P + I + D
+
+The output is then converted into a suitable servo angle.
+
+5. Beam Adjustment
+
+The servo motor changes the angle of the beam.
+
+When the beam angle changes, gravity causes the ball to roll along the beam.
+
+The ultrasonic sensor measures the new position again, and the process repeats.
+
+This continuous measurement and correction creates the feedback loop.
+
+🔄 Closed-Loop Feedback
+
+The complete feedback process is:
+
+Ball Position
+     ↓
+Ultrasonic Measurement
+     ↓
+Arduino
+     ↓
+Error Calculation
+     ↓
+Controller
+     ↓
+Servo Motor
+     ↓
+Beam Angle
+     ↓
+Ball Movement
+     ↓
+New Ball Position
+     ↓
+Ultrasonic Measurement
+     ↺
+
+This is the fundamental idea behind many real-world automatic control systems.
 
 🧰 Hardware Components
 
 Component
 
-Function
+Quantity
+
+Purpose
 
 Arduino Uno
 
-Main controller; reads the sensor and generates the servo command
+1
 
-HC-SR04
+Main controller
 
-Measures the ball position using ultrasonic echo time
+HC-SR04 Ultrasonic Sensor
 
-Servo Motor
+1
 
-Changes the beam inclination
+Ball position measurement
 
-Beam + Support
+SG90 Servo Motor
 
-Mechanical plant and ball path
+1
 
-Lightweight Ball
+Beam angle control
+
+Ball
+
+1
 
 Controlled object
 
-Jumper Wires / Breadboard
+Breadboard
+
+1
+
+Circuit prototyping
+
+Jumper Wires
+
+As required
 
 Electrical connections
 
-Mechanical Linkage
+Cardboard / Beam Structure
 
-Transfers servo motion to the beam
+1
+
+Mechanical structure
+
+USB Cable
+
+1
+
+Programming and communication
 
 🔌 Pin Configuration
 
-Device
+The current implementation uses the following Arduino connections:
+
+Component
 
 Pin
 
 Arduino Uno
-
-HC-SR04
-
-VCC
-
-5V
-
-HC-SR04
-
-GND
-
-GND
 
 HC-SR04
 
@@ -171,322 +253,452 @@ ECHO
 
 D3
 
-Servo
+Servo Motor
 
 Signal
 
 D5
 
-Servo
+HC-SR04
 
 VCC
 
-5V / suitable external supply
+5V
 
-Servo
+HC-SR04
 
 GND
 
-Common GND
+GND
 
-Important: If an external supply is used for the servo, its ground should be connected to the Arduino ground.
+Servo Motor
 
-🧠 PID Controller Implementation
+VCC
 
-The Arduino program maintains the previous error and accumulated error to form the three controller actions.
+5V*
 
-Proportional term
+Servo Motor
 
-P = Kp × error
+GND
 
-The proportional action responds to the present error.
+GND
 
-Integral term
+Power Note
 
-I = Ki × accumulated_error
+For a more reliable hardware implementation, the servo should preferably be supplied by a suitable external 5V supply, especially if the servo causes voltage fluctuations.
 
-The integral action accounts for the accumulated error over time.
+The Arduino ground and external servo-supply ground must be connected together.
 
-Derivative term
+🖼️ Circuit Diagram
 
-D = Kd × change_in_error
+The following circuit diagram represents the connection between the Arduino Uno, HC-SR04 ultrasonic sensor, and servo motor.
 
-The derivative action responds to the change in error.
 
-Total controller output
 
-PID output = P + I + D
+Add the final circuit diagram to the images folder using the filename circuit-diagram.png.
 
-The output is then mapped to a servo angle and limited to the safe range used by the implementation.
+🧮 PID Controller
 
-💻 Arduino Uno Code
+The project uses a PID-based control structure.
 
-The complete Arduino implementation is available in:
+PID stands for:
 
-src/beam_balance_pid.ino
+P — Proportional
 
-The core implementation follows this feedback sequence:
+I — Integral
 
-#include <Servo.h>
+D — Derivative
 
-Servo servo;
+The general PID equation is:
 
-#define trig 2
-#define echo 3
+u(t) = Kp·e(t) + Ki∫e(t)dt + Kd·de(t)/dt
 
-#define kp 0
-#define ki 0
-#define kd 0
+where:
 
-double priError = 0;
-double toError = 0;
+e(t) = error
 
-void setup() {
-    pinMode(trig, OUTPUT);
-    pinMode(echo, INPUT);
+Kp = proportional gain
 
-    servo.attach(5);
+Ki = integral gain
 
-    Serial.begin(9600);
-    servo.write(50);
-}
+Kd = derivative gain
 
-void loop() {
-    PID();
-}
+u(t) = controller output
 
-long distance() {
-    digitalWrite(trig, LOW);
-    delayMicroseconds(4);
+Proportional Action
 
-    digitalWrite(trig, HIGH);
-    delayMicroseconds(10);
+The proportional term responds to the present error.
 
-    digitalWrite(trig, LOW);
+P = Kp × Error
 
-    long t = pulseIn(echo, HIGH);
-    long cm = t / 29 / 2;
+A larger error produces a larger proportional response.
 
-    return cm;
-}
+Integral Action
 
-void PID() {
-    int dis = distance();
+The integral term considers the accumulated error over time.
 
-    int setP = 15;
-    double error = setP - dis;
+I = Ki × Accumulated Error
 
-    double Pvalue = error * kp;
-    double Ivalue = toError * ki;
-    double Dvalue = (error - priError) * kd;
+It can help reduce steady-state error.
 
-    double PIDvalue = Pvalue + Ivalue + Dvalue;
+Derivative Action
 
-    priError = error;
-    toError += error;
+The derivative term considers the change in error.
 
-    Serial.println(PIDvalue);
+D = Kd × Change in Error
 
-    int Fvalue = (int)PIDvalue;
+It can help reduce excessive oscillation and improve the response of the system.
 
-    Fvalue = map(Fvalue, -135, 135, 135, 0);
+💻 PID Implementation in Arduino
 
-    if (Fvalue < 0)
-        Fvalue = 0;
+The PID calculation is implemented in the program as:
 
-    if (Fvalue > 135)
-        Fvalue = 135;
+double Pvalue = error * kp;
+double Ivalue = toError * ki;
+double Dvalue = (error - priError) * kd;
 
-    servo.write(Fvalue);
-}
+double PIDvalue = Pvalue + Ivalue + Dvalue;
 
-⚠️ Note about PID tuning
+The previous error is stored using:
 
-The documented code currently contains:
+priError = error;
+
+and the accumulated error is updated using:
+
+toError += error;
+
+The controller output is then converted into a servo command.
+
+⚠️ Current PID Status
+
+The current code contains:
 
 #define kp 0
 #define ki 0
 #define kd 0
 
-These values are intentionally documented as the starting framework, not as final optimized tuning parameters.
+Therefore, the PID calculation framework is implemented, but the PID gains are currently set to zero.
 
-For actual closed-loop performance, Kp, Ki and Kd should be tuned experimentally based on the mechanical setup and measured response.
+This means the current version should be considered a PID-based control prototype, with proper gain tuning remaining as an important next step.
 
-📏 Sensor Measurement
+The values of Kp, Ki, and Kd can be experimentally adjusted to achieve:
 
-The HC-SR04 determines distance from the duration of the echo pulse.
+Better stability
 
-The implementation uses:
+Lower steady-state error
 
-long cm = t / 29 / 2;
+Reduced oscillation
 
-The measured distance is then used as the feedback signal for the controller.
+Faster response
 
-Because ultrasonic measurements can fluctuate, practical improvements may include averaging or filtering the sensor readings.
+Better ball positioning
 
-🏗️ Physical Prototype
+This distinction is intentionally mentioned so that the repository accurately represents the current implementation.
 
-The theoretical ball-and-beam system was converted into a practical prototype using a lightweight mechanical structure.
+🎛️ Servo Control
 
-The setup consists of:
+The calculated controller output is mapped to a servo operating range:
 
-A beam supported around a pivot
+Fvalue = map(Fvalue, -135, 135, 135, 0);
 
-A servo-based beam adjustment mechanism
+The value is then restricted to the allowed range:
 
-HC-SR04 sensor for position measurement
+if (Fvalue < 0) {
+  Fvalue = 0;
+}
 
-Arduino Uno as the controller
+if (Fvalue > 135) {
+  Fvalue = 135;
+}
 
-A lightweight ball as the controlled object
+Finally, the servo is commanded using:
 
-📷 Prototype Image
+servo.write(Fvalue);
 
-Upload the project photograph to: images/beam-balance-prototype.jpg
+The servo movement changes the beam inclination and consequently changes the position of the ball.
 
+🖥️ Serial Monitoring
 
+The controller output is sent to the Serial Monitor at:
 
-Figure: Practical Beam Balance prototype.
+Serial.begin(9600);
 
-📊 Experimental Observation
+The PID output can therefore be observed during experimentation.
 
-During operation, the main quantities of interest are:
+This can be useful while tuning the controller and studying system response.
 
-Desired ball position
+📷 Hardware Prototype
 
-Measured ball position
+Complete Prototype
 
-Position error
 
-PID controller output
 
-Servo angle
+Front View
 
-Response stability
 
-Settling behaviour
 
-Sensor fluctuations
+Top View
 
-The Arduino Serial Monitor/Serial Plotter can be used to observe controller behaviour during testing.
 
-Suggested result plot
 
-Upload your Serial Plotter/result graph to: images/pid-response.png
+Electronics and Arduino
 
 
 
-Figure: Experimental position/controller response.
+Mechanical Structure
 
-⚠️ Practical Challenges
 
-1. Ultrasonic sensor noise
 
-HC-SR04 measurements may fluctuate due to sensing conditions and ball geometry.
+Recommended: The most important image here is the complete working prototype.
+A clear photograph showing the beam, ball, ultrasonic sensor, servo, and Arduino together makes the project much easier to understand.
 
-Possible improvement: moving-average or other filtering.
+🎥 Demonstration Video
 
-2. Mechanical vibration
+A demonstration of the working prototype will be provided here.
 
-A flexible beam or loose linkage can introduce unwanted movement.
+▶️ Beam Balance Demonstration
 
-Possible improvement: use a more rigid beam and stronger mechanical support.
+Watch the Project Demonstration Video
 
-3. Sensor alignment
+Upload the final demonstration video to the video folder, or replace the link above with your YouTube/Google Drive video link.
 
-Incorrect sensor alignment can produce inconsistent position measurements.
+What the video should ideally show
 
-Possible improvement: mount and align the sensor carefully with the ball path.
+The complete hardware setup.
 
-4. Servo limitations
+The ball placed on the beam.
 
-The servo has limited speed, torque and angular range.
+The ultrasonic sensor measuring the ball position.
 
-Possible improvement: use an appropriate servo and stable power supply.
+Servo movement.
 
-5. PID tuning
+Beam movement.
 
-The controller gains strongly affect stability, response speed and overshoot.
+Ball movement toward the desired position.
 
-Possible improvement: tune Kp, then Ki and Kd experimentally.
+Arduino Serial Monitor, if useful.
 
-🚀 Future Improvements
+📄 Project Report
 
-Experimentally tune Kp, Ki and Kd.
+The complete project report/documentation will be added here:
 
-Add ultrasonic measurement filtering.
+📘 View / Download Project Report
 
-Log measured position and controller output.
+The report contains detailed information about:
 
-Generate quantitative response plots.
+Project introduction
 
-Improve beam rigidity and pivot construction.
+Objectives
 
-Improve servo-to-beam mechanical linkage.
+System design
 
-Optimize sensor placement and alignment.
+Hardware components
 
-Use a dedicated/stable servo power supply.
+Circuit diagram
 
-Add better protection for sensor noise and abnormal readings.
+Working principle
 
-Compare P, PI and PID responses experimentally.
+Control-system concept
 
-🎥 Project Demonstration
+PID controller
 
-Upload your demonstration video and replace the link below.
+Arduino implementation
 
-Video: ▶ Watch Project Demonstration
+Experimental observations
 
-The video should demonstrate:
+Limitations
 
-Complete hardware setup
+Future improvements
 
-Ball movement on the beam
+Conclusion
 
-Ultrasonic position measurement
+Upload your final PDF to docs/Beam-Balance-Project-Report.pdf.
 
-Servo-based beam adjustment
+🚀 How to Run
 
-Closed-loop control behaviour
+1. Hardware Setup
 
-📄 Project Report / PDF
+Connect the components according to the pin configuration and circuit diagram.
 
-The detailed project report is available here:
+2. Open Arduino IDE
 
-📘 View Project Report
+Open:
 
-The report contains the system description, objectives, hardware design, Arduino implementation, control methodology, prototype discussion, conclusion and future improvements.
+Beam_Balance.ino
 
+3. Select Board
 
-🎓 Academic Context
+Select:
 
-This work was completed as a course laboratory project at IIT Guwahati under the guidance of Dr. Chayan Bhawal.
+Arduino Uno
 
-The project provided practical exposure to:
+and choose the correct COM port.
 
-Feedback control systems
+4. Upload
 
-PID controllers
+Upload the program to the Arduino Uno.
 
-Sensor interfacing
+5. Place the Ball
 
-Arduino programming
+Place the ball on the beam within the sensing range of the ultrasonic sensor.
 
-Servo actuation
+6. Observe the System
 
-Closed-loop control
+Open the Serial Monitor at:
 
-Embedded systems
+9600 baud
 
-Mechanical prototyping
+Observe the controller output and servo response.
 
-Experimental controller tuning
+7. PID Tuning
 
-👨‍💻 Author
+If PID control is being experimentally tuned, adjust:
+
+#define kp ...
+#define ki ...
+#define kd ...
+
+and observe the effect on the ball position and system stability.
+
+📊 System Parameters
+
+Parameter
+
+Current Value
+
+Microcontroller
+
+Arduino Uno
+
+Distance Sensor
+
+HC-SR04
+
+Actuator
+
+SG90 Servo
+
+TRIG Pin
+
+D2
+
+ECHO Pin
+
+D3
+
+Servo Signal
+
+D5
+
+Setpoint
+
+15 cm
+
+Serial Baud Rate
+
+9600
+
+Servo Command Range
+
+0°–135°
+
+Control Structure
+
+PID-based
+
+Current Kp
+
+0
+
+Current Ki
+
+0
+
+Current Kd
+
+0
+
+⚠️ Limitations
+
+As a low-cost laboratory prototype, the current system has several practical limitations:
+
+The mechanical beam is constructed from cardboard.
+
+The mechanical structure is less rigid than an industrial setup.
+
+Ultrasonic sensors can be affected by measurement noise and object orientation.
+
+Servo motors have limited speed, torque, and angular resolution.
+
+Mechanical backlash can affect positioning accuracy.
+
+The PID parameters require proper experimental tuning.
+
+The current PID gains are set to zero.
+
+Servo power requirements can affect Arduino stability if the power source is inadequate.
+
+🔧 Future Improvements
+
+The project can be further improved by:
+
+Experimentally tuning Kp, Ki, and Kd.
+
+Using a stronger and more rigid beam.
+
+Improving the servo-to-beam mechanical linkage.
+
+Adding filtering to reduce ultrasonic sensor noise.
+
+Using a dedicated power supply for the servo.
+
+Adding an LCD/OLED display for real-time measurements.
+
+Recording position and control-output data.
+
+Plotting the system response.
+
+Measuring rise time, settling time, overshoot, and steady-state error.
+
+Comparing different controller settings.
+
+Using a more precise position sensor for improved accuracy.
+
+Developing a more robust mechanical structure for long-term operation.
+
+👨‍💻 Project Information
+
+Student
 
 Lalan Kumar Das
-Roll No.: 230108028
-Electrical and Electronics Engineering
-Indian Institute of Technology Guwahati
+** 230108028   IITG EEE **
 
+Project Type
+
+Course Lab Project
+
+Guided By
+
+Dr. Chayan Bhawal
+
+Project
+
+Beam Balance / Ball-and-Beam Control System
+
+⭐ Project Status
+
+Prototype Completed
+
+The physical Beam Balance prototype has been constructed and tested as a course-lab project.
+
+The current implementation establishes the sensor–controller–actuator feedback structure and includes a PID calculation framework. Further PID tuning and mechanical optimization can be performed to improve stability and positioning accuracy.
+
+🙌 Acknowledgement
+
+I would like to express my sincere gratitude to Dr. Chayan Bhawal for his guidance and support during the development of this course-lab project.
+
+This project provided valuable hands-on experience in applying control-system concepts to a real physical system and helped bridge the gap between theoretical concepts and practical implementation.
+
+<p align="center">
+  <b>⚙️ Built to understand Control Systems through a real physical prototype.</b>
+</p>
