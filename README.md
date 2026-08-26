@@ -10,8 +10,7 @@
 
 ## 📸 Project Preview
 
-> **Add your best and clearest photograph of the complete working prototype here.**
-> This should be the first image visitors see when they open the repository.
+<img width="1600" height="901" alt="image" src="https://github.com/user-attachments/assets/31611eec-2ce5-47d8-82f1-e94af90b9347" />
 
 ---
 
