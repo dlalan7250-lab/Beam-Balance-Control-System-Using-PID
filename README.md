@@ -1,6 +1,3 @@
-Of course bhai. Here is the **same README from your uploaded file**, without changing the content. You can copy-paste it directly into `README.md`. 
-
-````markdown
 # ⚖️ Beam Balance System
 
 ### Ball-and-Beam Position Control using Arduino Uno, Ultrasonic Sensor & Servo Motor
