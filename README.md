@@ -409,13 +409,16 @@ This can be useful while tuning the controller and studying system response.
 
 ## Complete Prototype
 
+
 ## Front View
+
 
 ## Top View
 
+
 ## Electronics and Arduino
 
-## Mechanical Structure
+
 
 > **Recommended:** The most important image here is the **complete working prototype**.
 > A clear photograph showing the beam, ball, ultrasonic sensor, servo, and Arduino together makes the project much easier to understand.
