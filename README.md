@@ -454,7 +454,7 @@ https://github.com/dlalan7250-lab/Beam-Balance-Control-System-Using-PID/blob/a9e
 
 The complete project report/documentation will be added here:
 
-### 📘 Beam_Balance_PID_Controller_Lalan_Kumar_Das_Final_Improved (1).pdf
+### 📘 Beam_Balance_PID_Controller_Lalan_Kumar_Das_Final_Improved .pdf
 The report contains detailed information about:
 
 * Project introduction
@@ -471,7 +471,7 @@ The report contains detailed information about:
 * Future improvements
 * Conclusion
 
-> **Upload your final PDF to** **`docs/Beam-Balance-Project-Report.pdf`**.
+https://github.com/dlalan7250-lab/Beam-Balance-Control-System-Using-PID/blob/d1ff4f3390c89e74292352f9e9fe363a42211c72/Beam_Balance_PID_Controller_Lalan_Kumar_Das_Final_Improved%20(1).pdf
 
 ---
 
