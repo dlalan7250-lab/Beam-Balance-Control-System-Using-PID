@@ -485,31 +485,6 @@ The report contains detailed information about:
 
 ---
 
-# 🗂️ Repository Structure
-
-```text
-Beam-Balance-System/
-│
-├── README.md
-│
-├── Beam_Balance.ino
-│
-├── images/
-│   ├── beam-balance-main.jpg
-│   ├── beam-balance-front.jpg
-│   ├── beam-balance-top.jpg
-│   ├── beam-balance-electronics.jpg
-│   ├── beam-balance-mechanical.jpg
-│   └── circuit-diagram.png
-│
-├── video/
-│   └── beam-balance-demo.mp4
-│
-└── docs/
-    └── Beam-Balance-Project-Report.pdf
-```
-
----
 
 # 🚀 How to Run
 
@@ -621,40 +596,13 @@ The project can be further improved by:
 
 ---
 
-# 📚 Learning Outcomes
-
-This course-lab project provided practical exposure to:
-
-* Closed-loop control systems
-* Feedback systems
-* PID controllers
-* Error calculation
-* Ultrasonic distance measurement
-* Servo motor control
-* Arduino programming
-* Sensor-actuator interfacing
-* Real-time control
-* Mechanical prototyping
-* Controller tuning
-* Practical limitations of control systems
-
----
-
-# 🔗 Reference
-
-The initial PID-controller implementation and learning material were referred to from **SriTu Hobby**:
-
-[PID Controller System with Arduino — SriTu Hobby](https://srituhobby.com/what-is-a-pid-controller-and-how-does-it-work-with-an-arduino/?utm_source=chatgpt.com)
-
-The implementation was adapted for this course-lab Beam Balance project.
-
----
 
 # 👨‍💻 Project Information
 
 ### Student
 
 **Lalan Kumar Das**
+** 230108028   IITG EEE **
 
 ### Project Type
 
