@@ -416,6 +416,7 @@ This can be useful while tuning the controller and studying system response.
 
 
 ## Top View
+<img width="1600" height="901" alt="image" src="https://github.com/user-attachments/assets/a2653d7f-bb91-4b08-b61f-38ef23e7ad27" />
 
 
 ## Electronics and Arduino
