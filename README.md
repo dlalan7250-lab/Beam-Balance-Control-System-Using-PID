@@ -435,7 +435,7 @@ A demonstration of the working prototype will be provided here.
 
 ### ▶️ Beam Balance Demonstration
 
-[**Watch the Project Demonstration Video**](video/beam-balance-demo.mp4)
+[**Watch the Project Demonstration Video**]beam balance  demo.mp4
 
 > Upload the final demonstration video to the `video` folder, or replace the link above with your YouTube/Google Drive video link.
 
