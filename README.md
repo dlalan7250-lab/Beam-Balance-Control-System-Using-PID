@@ -455,8 +455,7 @@ A demonstration of the working prototype will be provided here.
 
 The complete project report/documentation will be added here:
 
-### 📘 [View / Download Project Report](docs/Beam-Balance-Project-Report.pdf)
-
+### 📘 Beam_Balance_PID_Controller_Lalan_Kumar_Das_Final_Improved (1).pdf
 The report contains detailed information about:
 
 * Project introduction
