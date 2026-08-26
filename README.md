@@ -420,6 +420,7 @@ This can be useful while tuning the controller and studying system response.
 
 
 ## Electronics and Arduino
+<img width="1067" height="757" alt="image" src="https://github.com/user-attachments/assets/e2829666-c925-4b7a-af07-591eebcdf9d1" />
 
 
 
