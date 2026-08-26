@@ -242,7 +242,8 @@ The **Arduino ground and external servo-supply ground must be connected together
 
 The following circuit diagram represents the connection between the Arduino Uno, HC-SR04 ultrasonic sensor, and servo motor.
 
-> **Add the final circuit diagram to the** **`images`** **folder using the filename** **`circuit-diagram.png`**.
+<img width="1067" height="757" alt="image" src="https://github.com/user-attachments/assets/2b8d9f34-fe9a-46ab-96d6-754330efadeb" />
+
 
 ---
 
