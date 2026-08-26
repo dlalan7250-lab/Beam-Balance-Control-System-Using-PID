@@ -408,6 +408,7 @@ This can be useful while tuning the controller and studying system response.
 # 📷 Hardware Prototype
 
 ## Complete Prototype
+<img width="1600" height="901" alt="image" src="https://github.com/user-attachments/assets/41e4c46c-78f9-4514-b623-41d544c89bd5" />
 
 
 ## Front View
